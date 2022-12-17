@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace OpenDiscussionv1.Models
 {
@@ -7,16 +8,14 @@ namespace OpenDiscussionv1.Models
     {
         [Key]
         public int ReplyId { get; set; }
-        [ForeignKey("Discussions")]
-        public int DiscussionsId { get; set; }
 
-        [ForeignKey("AspNetUsers")]
-        public String AuthorId { get; set; }
-
+        [Required(ErrorMessage = "Reply content is mandatory!")]
         public String Content { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
+        [ForeignKey("Discussions")]
+        public int DiscussionId { get; set; }
         public virtual Discussion Discussion { get; set; }
     }
 }

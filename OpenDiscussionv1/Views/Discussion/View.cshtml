@@ -1,0 +1,50 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-dark" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+<a href="/Discussion/Index" class="btn btn-info">All discussions</a>
+<h3 class="text-center my-2">@ViewBag.Discussion.Title</h3>
+
+<div class="border my-1 p-2">
+    @Html.Partial("Discussion", (OpenDiscussionv1.Models.Discussion)ViewBag.Discussion)
+    <div class="card-body d-flex">
+        <a href="/Discussion/Edit/@ViewBag.Discussion.DiscussionId" class="btn btn-info">Edit discussion</a>
+        <form method="post" action="/Discussion/Delete/@ViewBag.Discussion.DiscussionId">
+            <button class="btn btn-danger mx-1" type="submit">Delete discussion</button>
+        </form>
+    </div>
+
+    <div class="list-group">
+        @foreach (var reply in ViewBag.Discussion.Replies) {
+            <div class="list-group-item my-1" aria-current="true">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">Ainta</h5>
+                </div>
+                <p class="mb-2">@reply.Content</p>
+                <small>Created at: @reply.CreatedAt</small>
+                <div class="d-flex">
+                    <a href="/Reply/Edit/@reply.ReplyId" class="btn btn-info">Edit reply</a>
+                    <form method="post" action="/Reply/Delete/@reply.ReplyId">
+                        <button class="btn btn-danger mx-1" type="submit">Delete reply</button>
+                    </form>
+                </div>
+            </div>
+        }
+    </div>
+
+    <form method="post" action="/Reply/New">
+        <input class="form-control mb-1 w-50" type="text" placeholder="Your reply here..." name="Content" />
+        <input value="@ViewBag.Discussion.DiscussionId" name="DiscussionId" hidden />
+        <button class="btn btn-success" type="submit">Reply</button>
+    </form>
+
+</div>

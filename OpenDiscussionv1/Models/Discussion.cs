@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace OpenDiscussionv1.Models
@@ -7,18 +8,19 @@ namespace OpenDiscussionv1.Models
     {
         [Key]
         public int DiscussionId { get; set; }
-        [ForeignKey("Categories")]
-        public int CategoryId { get; set; }
 
-        [ForeignKey("AspNetUsers")]
-        public String AuthorId { get; set; } 
+        [Required(ErrorMessage = "Discussion title is mandatory!")]
         public String Title { get; set; }
 
+        [Required(ErrorMessage = "Discussion content is mandatory!")]
         public String Content { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
+        [ForeignKey("Categories")]
+        public int CategoryId { get; set; }
         public virtual Category Category { get; set; }
-        public IList<Reply> Replies { get; set; }
+
+        public ICollection<Reply> Replies { get; set; }
     }
 }

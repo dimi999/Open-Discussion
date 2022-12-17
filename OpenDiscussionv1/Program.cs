@@ -38,11 +38,20 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Discussion}/{action=Index}");
 
 app.MapControllerRoute(
-    name: "categories",
-    pattern: "{controller=Category}/{action=Show}");
+    name: "Discussion",
+    pattern: "{controller=Discussion}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "Category",
+    pattern: "{controller=Category}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "Reply",
+    pattern: "{controller=Reply}/{action=Index}/{id?}");
+
 app.MapRazorPages();
 
 app.Run();

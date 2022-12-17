@@ -2,7 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using OpenDiscussionv1.Data;
 using OpenDiscussionv1.Models;
-using System;
 
 namespace OpenDiscussionv1.Controllers
 {
@@ -17,42 +16,83 @@ namespace OpenDiscussionv1.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Show()
-        {
-            List<Category> categ = db.Categories.ToList();
+            var categ = from category in db.Categories
+                        select category;
             ViewBag.Categories = categ;
-            
+
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.Message = TempData["message"];
+            }
+
             return View();
         }
 
-        public IActionResult Insert(Category categ)
+        [HttpPost]
+        public IActionResult New(Category categ)
         {
             try
             {
                 db.Categories.Add(categ);
                 db.SaveChanges();
-                return RedirectToAction("Show");
+                TempData["message"] = "Categoria a fost adaugata!";
+                return RedirectToAction("Index");
             } catch
             {
-                return RedirectToAction("Invalid");
+                TempData["message"] = "Eroare la adaugarea categoriei!";
+                return RedirectToAction("Index");
             }
         }
 
-        public IActionResult Delete(string id)
+        [HttpGet]
+        public IActionResult Edit(int id)
         {
-            int id_bun = Int32.Parse(id);
             try
             {
-                db.Categories.Remove(db.Categories.Find(id_bun));
+                Category category = db.Categories.Find(id);
+                ViewBag.Category = category;
+                return View();
+            } catch
+            {
+                TempData["message"] = "Categoria nu a fost gasita!";
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int id, Category requestCategory)
+        {
+            try
+            {
+                Category category = db.Categories.Find(id);
+                category.CategoryName = requestCategory.CategoryName;
                 db.SaveChanges();
-                return RedirectToAction("Show");
+
+                TempData["message"] = "Categoria a fost editata!";
+                return RedirectToAction("Index");
             }
             catch
             {
-                return RedirectToAction("Invalid");
+                TempData["message"] = "Eroare la editarea categoriei!";
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                Category category = db.Categories.Find(id);
+                db.Categories.Remove(category);
+                db.SaveChanges();
+                TempData["message"] = "Categoria a fost stearsa!";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["message"] = "Eroare la stergerea categoriei!";
+                return RedirectToAction("Index");
             }
         }
 

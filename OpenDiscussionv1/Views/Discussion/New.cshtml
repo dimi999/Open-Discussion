@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h3 class="text-center">Start a new discussion</h3>
+
+<div class="container">
+    <form method="post" action="/Discussion/New">
+        <input class="form-control mb-1" type="text" placeholder="Title" name="Title" />
+        <textarea class="form-control mb-1" rows=5 placeholder="Your thoughts here..." name="Content"></textarea>
+        <select class="form-select mb-1" name="CategoryId">
+            @foreach (var categ in ViewBag.Categories) {
+                <option value="@categ.CategoryId">@categ.CategoryName</option>
+            }
+        </select>
+        <button class="btn btn-success" type="submit">Start Discussion</button>
+    </form>
+</div>
