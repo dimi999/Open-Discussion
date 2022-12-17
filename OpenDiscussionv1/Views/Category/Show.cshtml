@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<ul>
+    @foreach (var item in ViewBag.Categories)
+    {   
+        <li>
+                
+                <option value="@item.CategoryId">@item.CategoryName</option>
+                <form method="post" action="/Category/Delete/@item.CategoryId">
+                    <button type="submit">Delete Category</button>
+                </form>
+        </li>
+    }
+</ul>
+
+<ul>
+    <li>
+        <form method="post" action="/Category/Insert">
+            <input type="text" name="CategoryName"/>
+
+            <button type="submit">Insert Category</button>
+        </form>
+    </li>
+</ul>
