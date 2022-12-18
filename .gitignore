@@ -6,6 +6,10 @@ project.lock.json
 .DS_Store
 *.pyc
 
+OpenDiscussionv1/Migrations
+OpenDiscussionv1/appsettings.Development.json
+OpenDiscussionv1/appsettings.json
+
 # Visual Studio Code
 .vscode
 

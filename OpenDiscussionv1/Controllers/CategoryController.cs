@@ -1,17 +1,25 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OpenDiscussionv1.Data;
 using OpenDiscussionv1.Models;
+using System.Data;
 
 namespace OpenDiscussionv1.Controllers
 {
     public class CategoryController : Controller
     {
         private readonly ApplicationDbContext db;
-
-        public CategoryController(ApplicationDbContext db)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public CategoryController(ApplicationDbContext context,
+                                     UserManager<ApplicationUser> userManager,
+                                     RoleManager<IdentityRole> roleManager)
         {
-            this.db = db;
+            db = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
         public IActionResult Index()
@@ -28,6 +36,7 @@ namespace OpenDiscussionv1.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Editor,Admin")]
         [HttpPost]
         public IActionResult New(Category categ)
         {
@@ -44,6 +53,7 @@ namespace OpenDiscussionv1.Controllers
             }
         }
 
+        [Authorize(Roles = "Editor,Admin")]
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -59,6 +69,7 @@ namespace OpenDiscussionv1.Controllers
             }
         }
 
+        [Authorize(Roles = "Editor,Admin")]
         [HttpPost]
         public IActionResult Edit(int id, Category requestCategory)
         {
@@ -78,6 +89,7 @@ namespace OpenDiscussionv1.Controllers
             }
         }
 
+        [Authorize(Roles = "Editor,Admin")]
         [HttpPost]
         public IActionResult Delete(int id)
         {

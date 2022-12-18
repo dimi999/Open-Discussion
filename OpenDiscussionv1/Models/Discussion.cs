@@ -8,19 +8,19 @@ namespace OpenDiscussionv1.Models
     {
         [Key]
         public int DiscussionId { get; set; }
+        public string? UserId { get; set; }
 
         [Required(ErrorMessage = "Discussion title is mandatory!")]
-        public String Title { get; set; }
+        public string Title { get; set; }
 
         [Required(ErrorMessage = "Discussion content is mandatory!")]
-        public String Content { get; set; }
+        public string Content { get; set; }
 
         public DateTime CreatedAt { get; set; }
 
-        [ForeignKey("Categories")]
-        public int CategoryId { get; set; }
-        public virtual Category Category { get; set; }
-
+        public int? CategoryId { get; set; }
+        public virtual Category? Category { get; set; }
+        public virtual ApplicationUser? User { get; set; }
         public ICollection<Reply> Replies { get; set; }
     }
 }

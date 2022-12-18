@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using OpenDiscussionv1.Data;
 using OpenDiscussionv1.Models;
+using System.Data;
 using System.Diagnostics;
 
 namespace OpenDiscussionv1.Controllers
@@ -8,88 +11,129 @@ namespace OpenDiscussionv1.Controllers
     public class ReplyController : Controller
     {
         private readonly ApplicationDbContext db;
-
-        public ReplyController(ApplicationDbContext db)
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public ReplyController(ApplicationDbContext context,
+                                     UserManager<ApplicationUser> userManager,
+                                     RoleManager<IdentityRole> roleManager)
         {
-            this.db = db;
+            db = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
 
+        [Authorize(Roles = "User,Editor,Admin")]
         [HttpPost]
         public IActionResult New(Reply reply)
         {
             reply.CreatedAt = DateTime.Now;
-
-            try
+            reply.UserId = _userManager.GetUserId(User);
+            if (ModelState.IsValid)
             {
-                db.Replies.Add(reply);
-                db.SaveChanges();
+                try
+                {
+                    db.Replies.Add(reply);
+                    db.SaveChanges();
 
-                TempData["message"] = "Raspunsul a fost adaugat!";
-                return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
+                    TempData["message"] = "Raspunsul a fost adaugat!";
+                    return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
+                }
+                catch
+                {
+                    TempData["message"] = "Eroare la adaugarea raspunsului!";
+                    return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
+                }
             }
-            catch
+            else
             {
-                TempData["message"] = "Eroare la adaugarea raspunsului!";
+                TempData["message"] = "Nu aveti drepturi pentru aceasta actiune!";
                 return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
-            }
+            }  
         }
 
+        [Authorize(Roles = "User,Editor,Admin")]
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            try
+            Reply reply = db.Replies.Find(id);
+            if (reply.UserId == _userManager.GetUserId(User) ||User.IsInRole("Admin"))
             {
-                Reply reply = db.Replies.Find(id);
-                ViewBag.Reply = reply;
+                try
+                {
 
-                return View();
+                    ViewBag.Reply = reply;
+
+                    return View();
+                }
+                catch
+                {
+                    TempData["message"] = "Raspunsul nu a fost gasita!";
+                    return RedirectToAction("Index", "Discussion");
+                }
             }
-            catch
+            else
             {
-                TempData["message"] = "Raspunsul nu a fost gasita!";
-                return RedirectToAction("Index", "Discussion");
+                TempData["message"] = "Nu aveti drepturi pentru aceasta actiune!";
+                return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
             }
         }
 
+        [Authorize(Roles = "User,Editor,Admin")]
         [HttpPost]
         public IActionResult Edit(int id, Reply requestReply)
         {
             Reply reply = db.Replies.Find(id);
-
-            try
-            {    
-                reply.Content = requestReply.Content;
-                db.SaveChanges();
-
-                TempData["message"] = "Raspunsul a fost editat!";
-                return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
-            }
-            catch
+            if (reply.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
-                TempData["message"] = "Eroare la editarea raspunsului!";
+                try
+                {
+                    reply.Content = requestReply.Content;
+                    db.SaveChanges();
+
+                    TempData["message"] = "Raspunsul a fost editat!";
+                    return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
+                }
+                catch
+                {
+                    TempData["message"] = "Eroare la editarea raspunsului!";
+                    return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
+                }
+            }
+            else
+            {
+                TempData["message"] = "Nu aveti drepturi pentru aceasta actiune!";
                 return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
             }
         }
 
+        [Authorize(Roles = "Editor,Admin")]
         [HttpPost]
         public IActionResult Delete(int id)
         {
             Reply reply = db.Replies.Find(id);
-            int discussionId = reply.DiscussionId;
+            int? discussionId = reply.DiscussionId;
 
-            try
-            {    
-                db.Replies.Remove(reply);
-                db.SaveChanges();
-
-                TempData["message"] = "Raspunsul a fost sters!";
-                return RedirectToAction("View", "Discussion", new { id = discussionId });
-            }
-            catch
+            if (reply.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
-                TempData["message"] = "Eroare la stergerea raspunsului!";
-                return RedirectToAction("View", "Discussion", new { id = discussionId });
+                try
+                {
+                    db.Replies.Remove(reply);
+                    db.SaveChanges();
+
+                    TempData["message"] = "Raspunsul a fost sters!";
+                    return RedirectToAction("View", "Discussion", new { id = discussionId });
+                }
+                catch
+                {
+                    TempData["message"] = "Eroare la stergerea raspunsului!";
+                    return RedirectToAction("View", "Discussion", new { id = discussionId });
+                }
             }
+            else
+            {
+                TempData["message"] = "Nu aveti drepturi pentru aceasta actiune!";
+                return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
+            }  
         }
     }
 }
