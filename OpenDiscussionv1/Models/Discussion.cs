@@ -21,6 +21,6 @@ namespace OpenDiscussionv1.Models
         public int? CategoryId { get; set; }
         public virtual Category? Category { get; set; }
         public virtual ApplicationUser? User { get; set; }
-        public ICollection<Reply> Replies { get; set; }
+        public virtual ICollection<Reply>? Replies { get; set; }
     }
 }

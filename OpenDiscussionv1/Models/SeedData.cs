@@ -53,7 +53,7 @@ namespace OpenDiscussionv1.Models
                 {
                     Id = "8e445865-a24d-4543-a6c6-9443d048cdb2",
                     // primary key
-                    UserName = "user@test.com",
+                    UserName = "user",
                     EmailConfirmed = true,
                     NormalizedEmail = "USER@TEST.COM",
                     Email = "user@test.com",

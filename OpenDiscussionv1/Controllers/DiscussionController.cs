@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using OpenDiscussionv1.Data;
 using OpenDiscussionv1.Models;
@@ -25,7 +26,7 @@ namespace OpenDiscussionv1.Controllers
 
         public IActionResult Index()
         {
-            var discussions = db.Discussions.Include("Category");
+            var discussions = db.Discussions.Include("Category").Include("User");
             ViewBag.Discussions = discussions;
 
             if (TempData.ContainsKey("message"))
@@ -39,8 +40,10 @@ namespace OpenDiscussionv1.Controllers
         public IActionResult View(int id)
         {
             var discussion = db.Discussions
-                            .Include("Category")
-                            .Include("Replies")
+                            .Include(discussion => discussion.User)
+                            .Include(discussion => discussion.Category)
+                            .Include(discussion => discussion.Replies)
+                            .ThenInclude(reply => reply.User)
                             .FirstOrDefault(d => d.DiscussionId == id);
             ViewBag.Discussion = discussion;
 
@@ -69,7 +72,8 @@ namespace OpenDiscussionv1.Controllers
         {
             discussion.CreatedAt = DateTime.Now;
             discussion.UserId = _userManager.GetUserId(User);
-            if(ModelState.IsValid)
+
+            if (ModelState.IsValid)
             {
                 try
                 {
@@ -91,7 +95,7 @@ namespace OpenDiscussionv1.Controllers
             }
         }
 
-        [Authorize(Roles = "Editor,Admin")]
+        [Authorize(Roles = "User,Editor,Admin")]
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -121,7 +125,7 @@ namespace OpenDiscussionv1.Controllers
             }
         }
 
-        [Authorize(Roles = "Editor,Admin")]
+        [Authorize(Roles = "User,Editor,Admin")]
         [HttpPost]
         public IActionResult Edit(int id, Discussion requestDiscussion)
         {
@@ -151,16 +155,16 @@ namespace OpenDiscussionv1.Controllers
             } 
         }
 
-        [Authorize(Roles = "Editor,Admin")]
+        [Authorize(Roles = "User,Editor,Admin")]
         [HttpPost]
         public IActionResult Delete(int id)
         {
             Discussion discussion = db.Discussions.Find(id);
+
             if (discussion.UserId == _userManager.GetUserId(User) || User.IsInRole("Admin"))
             {
                 try
                 {
-
                     db.Discussions.Remove(discussion);
                     db.SaveChanges();
                     TempData["message"] = "Discutia a fost stearsa!";

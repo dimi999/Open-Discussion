@@ -28,6 +28,7 @@ namespace OpenDiscussionv1.Controllers
         {
             reply.CreatedAt = DateTime.Now;
             reply.UserId = _userManager.GetUserId(User);
+
             if (ModelState.IsValid)
             {
                 try
@@ -60,7 +61,6 @@ namespace OpenDiscussionv1.Controllers
             {
                 try
                 {
-
                     ViewBag.Reply = reply;
 
                     return View();
@@ -106,7 +106,7 @@ namespace OpenDiscussionv1.Controllers
             }
         }
 
-        [Authorize(Roles = "Editor,Admin")]
+        [Authorize(Roles = "User,Editor,Admin")]
         [HttpPost]
         public IActionResult Delete(int id)
         {

@@ -27,7 +27,7 @@
         @foreach (var reply in ViewBag.Discussion.Replies) {
             <div class="list-group-item my-1" aria-current="true">
                 <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">Ainta</h5>
+                    <h5 class="mb-1">Reply by @reply.User.UserName </h5>
                 </div>
                 <p class="mb-2">@reply.Content</p>
                 <small>Created at: @reply.CreatedAt</small>
