@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using OpenDiscussionv1.Models;
-using System.Reflection.Metadata;
 
 namespace OpenDiscussionv1.Data
 {

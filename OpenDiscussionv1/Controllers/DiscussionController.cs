@@ -34,6 +34,11 @@ namespace OpenDiscussionv1.Controllers
                 ViewBag.Message = TempData["message"];
             }
 
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.ShowAdminTab = true;
+            }
+
             return View();
         }
 

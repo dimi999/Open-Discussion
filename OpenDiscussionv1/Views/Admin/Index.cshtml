@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+Admin Tab!
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+@for (int i = 0; i < ViewBag.users.Count; i++) {
+    <p>@ViewBag.users[i].UserName is @ViewBag.roles[i][0]</p>
+}

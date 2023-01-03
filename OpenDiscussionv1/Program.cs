@@ -61,6 +61,10 @@ app.MapControllerRoute(
     name: "Reply",
     pattern: "{controller=Reply}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "Admin",
+    pattern: "{controller=Admin}/{action=Index}");
+
 app.MapRazorPages();
 
 app.Run();
