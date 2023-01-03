@@ -1,0 +1,50 @@
+﻿@page
+@model IndexModel
+@inject UserManager<ApplicationUser> UserManager
+@using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IWebHostEnvironment;
+@inject IHostingEnvironment _env
+@{
+    ViewData["Title"] = "Profile";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h3>@ViewData["Title"]</h3>
+<partial name="_StatusMessage" for="StatusMessage"/>
+<div class="row">
+    @{
+        string str = UserManager.GetUserId(User) + ".jpeg";
+    }
+    <img src="~/images/@str" style="width:250px;height:250px;" alt="No Photo"/>
+    <div class="col-md-6">
+        <form enctype="multipart/form-data" id="profile-form" method="post" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-floating">
+                <input asp-for="Username" class="form-control" disabled />
+                <label asp-for="Username" class="form-label"></label>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Input.Image">Profile Picture</label>
+                <br />
+                <input asp-for="Input.Image" type="file"/>
+            </div>
+            <div>
+                <label asp-for="Input.Title" class="form-control">Title</label>
+                <input asp-for="Input.Title" class="form-label" value="@UserManager.GetUserAsync(User).Result.Title"/>
+            </div>
+            <div>
+                <label asp-for="Input.Description" class="form-control">Description of yourself</label>
+                <input asp-for="Input.Description" class="form-label" value="@UserManager.GetUserAsync(User).Result.Description"/>
+            </div>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
