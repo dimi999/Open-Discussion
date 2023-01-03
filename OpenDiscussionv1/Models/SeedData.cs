@@ -31,7 +31,7 @@ namespace OpenDiscussionv1.Models
                 {
                     Id = "8e445865-a24d-4543-a6c6-9443d048cdb0",
                     // primary key
-                    UserName = "admin",
+                    UserName = "admin@test.com",
                     EmailConfirmed = true,
                     NormalizedEmail = "ADMIN@TEST.COM",
                     Email = "admin@test.com",
@@ -42,7 +42,7 @@ namespace OpenDiscussionv1.Models
                {
                    Id = "8e445865-a24d-4543-a6c6-9443d048cdb1",
                    // primary key
-                   UserName = "editor",
+                   UserName = "editor@test.com",
                    EmailConfirmed = true,
                    NormalizedEmail = "EDITOR@TEST.COM",
                    Email = "editor@test.com",
@@ -53,7 +53,7 @@ namespace OpenDiscussionv1.Models
                 {
                     Id = "8e445865-a24d-4543-a6c6-9443d048cdb2",
                     // primary key
-                    UserName = "user",
+                    UserName = "user@test.com",
                     EmailConfirmed = true,
                     NormalizedEmail = "USER@TEST.COM",
                     Email = "user@test.com",
