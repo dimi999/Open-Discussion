@@ -49,7 +49,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Discussion}/{action=Index}");
+    pattern: "{controller=Category}/{action=Index}");
 
 app.MapControllerRoute(
     name: "Discussion",

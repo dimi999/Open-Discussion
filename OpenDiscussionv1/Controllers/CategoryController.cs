@@ -25,13 +25,49 @@ namespace OpenDiscussionv1.Controllers
         public IActionResult Index()
         {
             var categ = from category in db.Categories
-                        select category;
+                        select new
+                        {
+                            Category = category,
+                            No_Discussions = (
+                                from discussion in db.Discussions
+                                where discussion.CategoryId == category.CategoryId
+                                select discussion
+                            ).Count()
+                        };
+
             ViewBag.Categories = categ;
 
             if (TempData.ContainsKey("message"))
             {
                 ViewBag.Message = TempData["message"];
             }
+
+            if (User.IsInRole("Admin"))
+            {
+                ViewBag.ShowAdminTab = true;
+            }
+
+            return View();
+        }
+
+        public IActionResult View(int id)
+        {
+            Category category = db.Categories.Find(id);
+
+            var No_Discussions = (
+                        from discussion in db.Discussions
+                        where discussion.CategoryId == category.CategoryId
+                        select discussion
+                    ).Count();
+
+            var discussions = db.Discussions
+                    .Where(d => d.CategoryId == category.CategoryId)
+                    .Include("User");
+
+
+            ViewBag.Category = category;
+            ViewBag.No_Discussions = No_Discussions;
+            ViewBag.Discussions = discussions;
 
             return View();
         }

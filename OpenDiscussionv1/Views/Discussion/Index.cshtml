@@ -17,12 +17,6 @@
     <div class="d-flex">
         <a href="/Discussion/New" class="btn btn-success">Start Discussion</a>
         <a href="/Category/Index" class="btn btn-success mx-1">View Categories</a>
-
-        @if (ViewBag.ShowAdminTab != null)
-        {
-            <a href="/Admin/Index" class="btn btn-success mx-1">Admin Tab</a>
-        }
-
     </div>
 
     @foreach(OpenDiscussionv1.Models.Discussion discussion in ViewBag.Discussions) {
