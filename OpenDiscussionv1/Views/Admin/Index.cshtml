@@ -4,14 +4,22 @@
 @{
 }
 
-Admin Tab!
-
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
-@for (int i = 0; i < ViewBag.users.Count; i++) {
-    <p>@ViewBag.users[i].UserName is @ViewBag.roles[i][0]</p>
+@if (ViewBag.message != null)
+{
+    <div class="alert alert-dark" role="alert">
+        @ViewBag.message
+    </div>
 }
+
+<h3 class="text-center">Admin Tab</h3>
+
+<ul class="mt-5 list-group list-group-flush">
+@for (int i = 0; i < ViewBag.users.Count; i++) {
+    <li class="list-group-item">
+         <div class="d-flex justify-content-around">
+            <div style="width: 300px">@ViewBag.users[i].UserName is @ViewBag.roles[i][0] </div>
+            <a href="/Admin/Edit/@ViewBag.users[i].Id" class="btn btn-info">Edit role</a>
+        </div>
+    </li>
+}
+</ul>

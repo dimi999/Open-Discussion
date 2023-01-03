@@ -1,0 +1,21 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h3 class="text-center">Discussions in @ViewBag.Category.CategoryName</h3>
+
+<div class="container">
+    <h6 class="mb-3">@ViewBag.No_Discussions results in @ViewBag.Category.CategoryName</h6>
+
+    @foreach (OpenDiscussionv1.Models.Discussion discussion in ViewBag.Discussions)
+    {
+        <div class="border my-1 p-2">
+            @Html.Partial("Discussion", discussion)
+            <div class="card-body">
+                <a href="/Discussion/View/@discussion.DiscussionId" class="btn btn-info">View discussion</a>
+            </div>
+        </div>
+    }
+</div>

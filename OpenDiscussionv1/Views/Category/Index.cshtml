@@ -16,21 +16,36 @@
 <div class="container">
 
     <div class="d-flex">
-        <a href="/Discussion/Index" class="btn btn-success">View Discussions</a>
+        <a href="/Discussion/Index" class="btn btn-success">View All Discussions</a>
+
+        @if (ViewBag.ShowAdminTab != null)
+        {
+            <a href="/Admin/Index" class="btn btn-success mx-1">Admin Tab</a>
+        }
     </div>
 
-    <div class="row row-cols-3 mb-3">
+    <div>
         @foreach (var category in ViewBag.Categories)
         {
             <div class="p-1">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">@category.CategoryName</h5>
-                        <div class="d-flex flex-row">
-                            <form method="post" action="/Category/Delete/@category.CategoryId">
+                        <h5 class="card-title">Category: @category.Category.CategoryName</h5>
+                        <p>@category.No_Discussions discussions</p>
+                        <div class="d-flex flex-row justify-content-between">
+                            @if (category.No_Discussions > 0)
+                            {
+                                <a href="/Category/View/@category.Category.CategoryId" class="btn btn-success">View discussions</a>
+                            }
+                            else
+                            {
+                                <a href="#" class="disabled btn btn-success">View discussions</a>
+
+                            }
+                            <form method="post" action="/Category/Delete/@category.Category.CategoryId">
                                 <button class="btn btn-danger" type="submit">Delete Category</button>
                             </form>
-                            <a href="/Category/Edit/@category.CategoryId" class="btn btn-info mx-1" type="submit">Edit Category</a>
+                            <a href="/Category/Edit/@category.Category.CategoryId" class="btn btn-info mx-1" type="submit">Edit Category</a>
                         </div>
                     </div>
                 </div>

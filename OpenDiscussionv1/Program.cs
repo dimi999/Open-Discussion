@@ -21,6 +21,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
         .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+builder.Services.Configure<SecurityStampValidatorOptions>(o => o.ValidationInterval = TimeSpan.FromSeconds(1));
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -51,7 +53,7 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Discussion}/{action=Index}");
+    pattern: "{controller=Category}/{action=Index}");
 
 app.MapControllerRoute(
     name: "Discussion",
