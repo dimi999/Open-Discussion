@@ -4,17 +4,33 @@
 @{
 }
 
+@model Discussion
+
 <h3 class="text-center">Start a new discussion</h3>
 
 <div class="container">
-    <form method="post" action="/Discussion/New">
-        <input class="form-control mb-1" type="text" placeholder="Title" name="Title" />
-        <textarea class="form-control mb-1" rows=5 placeholder="Your thoughts here..." name="Content"></textarea>
+    @using (Html.BeginForm(actionName: "New", controllerName: "Discussion", method: FormMethod.Post))
+    {
+        @Html.Label("Title", "Titlu Articol")
+        <br />
+        @Html.TextBox("Title", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Title, null, new { @class = "text-danger" })
+        <br />
+
+        @Html.Label("Content", "Continut Articol")
+        <br />
+        @Html.TextArea("Content", null, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Content, null, new { @class = "text-danger" })
+        <br />
+
         <select class="form-select mb-1" name="CategoryId">
-            @foreach (var categ in ViewBag.Categories) {
+            @foreach (var categ in ViewBag.Categories)
+            {
                 <option value="@categ.CategoryId">@categ.CategoryName</option>
             }
         </select>
+        <br />
+
         <button class="btn btn-success" type="submit">Start Discussion</button>
-    </form>
+    }
 </div>

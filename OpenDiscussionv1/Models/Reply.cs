@@ -11,6 +11,7 @@ namespace OpenDiscussionv1.Models
         public String ?UserId { get; set; }
 
         [Required(ErrorMessage = "Reply content is mandatory!")]
+        [MinLength(3, ErrorMessage = "Reply content has to be at least 3 characters long!")]
         public String Content { get; set; }
 
         public DateTime CreatedAt { get; set; }

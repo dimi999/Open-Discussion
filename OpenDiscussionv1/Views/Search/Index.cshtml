@@ -22,7 +22,15 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">@discussion.Title</h5>
-                        <p>@discussion.User.UserName</p>
+
+                        @{
+                            string str = @discussion.User.Id + ".jpeg";
+                        }
+                        <p>
+                            <span>
+                                <img src="~/images/@str" onerror="this.onerror=null; this.src = '/images/fallback.jpg';" width="20" height="20">
+                            </span> @discussion.User.UserName
+                        </p>
                         <p>@discussion.Content</p>
                         <a href="/Discussion/View/@discussion.DiscussionId" class="btn btn-info">Open</a>
                     </div>
@@ -36,7 +44,14 @@
             <div class="p-1">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">@reply.User.UserName</h5>
+                        @{
+                            string str = @reply.User.Id + ".jpeg";
+                        }
+                        <h5 class="card-title">
+                            <span>
+                                <img src="~/images/@str" onerror="this.onerror=null; this.src = '/images/fallback.jpg';" width="20" height="20">
+                            </span> @reply.User.UserName
+                        </h5>
                         <p>@reply.Content</p>
                         <a href="/Discussion/View/@reply.Discussion.DiscussionId" class="btn btn-info">Open</a>
                     </div>

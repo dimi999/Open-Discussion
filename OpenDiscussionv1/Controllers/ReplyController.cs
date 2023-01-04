@@ -47,7 +47,7 @@ namespace OpenDiscussionv1.Controllers
             }
             else
             {
-                TempData["message"] = "Nu aveti drepturi pentru aceasta actiune!";
+                TempData["message"] = "Intrare invalida!";
                 return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
             }  
         }
@@ -87,11 +87,19 @@ namespace OpenDiscussionv1.Controllers
             {
                 try
                 {
-                    reply.Content = requestReply.Content;
-                    db.SaveChanges();
+                    if (ModelState.IsValid)
+                    {
+                        reply.Content = requestReply.Content;
+                        db.SaveChanges();
 
-                    TempData["message"] = "Raspunsul a fost editat!";
-                    return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
+                        TempData["message"] = "Raspunsul a fost editat!";
+                        return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
+                    }
+                    else
+                    {
+                        TempData["message"] = "Intrare invalida!";
+                        return RedirectToAction("View", "Discussion", new { id = reply.DiscussionId });
+                    }
                 }
                 catch
                 {
