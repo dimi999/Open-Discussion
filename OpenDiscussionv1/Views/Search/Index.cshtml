@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<h3 class="text-center">Search results</h3>
+
+<div class="container">
+
+    @{
+        var cnt = @ViewBag.Discussions_Count + @ViewBag.Replies_Count;
+    }
+    <h4>@cnt results for @ViewBag.Search</h4>
+
+    @if (cnt > 0)
+    {
+        <h6 class="mt-4">@ViewBag.Discussions_Count discussions</h6>
+        @foreach (var discussion in ViewBag.Discussions)
+        {
+            <div class="p-1">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@discussion.Title</h5>
+                        <p>@discussion.User.UserName</p>
+                        <p>@discussion.Content</p>
+                        <a href="/Discussion/View/@discussion.DiscussionId" class="btn btn-info">Open</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <h6 class="mt-4">@ViewBag.Replies_Count replies</h6>
+        @foreach (var reply in ViewBag.Replies)
+        {
+            <div class="p-1">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@reply.User.UserName</h5>
+                        <p>@reply.Content</p>
+                        <a href="/Discussion/View/@reply.Discussion.DiscussionId" class="btn btn-info">Open</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+    }
+
+</div>

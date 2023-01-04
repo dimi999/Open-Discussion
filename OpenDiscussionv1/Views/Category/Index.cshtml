@@ -23,6 +23,19 @@
         }
     </div>
 
+    <div class="mt-3">
+        <form method="get" action="/Search/Index">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control"
+                       placeholder="Search keywords..." name="search">
+                <button class="btn btn-outline-success"
+                        type="submit">
+                    Search
+                </button>
+            </div>
+        </form>
+    </div>
+
     <div>
         @foreach (var category in ViewBag.Categories)
         {
