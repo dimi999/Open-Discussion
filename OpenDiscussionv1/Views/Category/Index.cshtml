@@ -16,7 +16,6 @@
 <div class="container">
 
     <div class="d-flex">
-        <a href="/Discussion/Index" class="btn btn-success">View All Discussions</a>
 
         @if (ViewBag.ShowAdminTab != null)
         {
@@ -45,6 +44,7 @@
                             <form method="post" action="/Category/Delete/@category.Category.CategoryId">
                                 <button class="btn btn-danger" type="submit">Delete Category</button>
                             </form>
+                            <a href="/Discussion/New" class="btn btn-success">Start Discussion</a>
                             <a href="/Category/Edit/@category.Category.CategoryId" class="btn btn-info mx-1" type="submit">Edit Category</a>
                         </div>
                     </div>

@@ -26,16 +26,9 @@ namespace OpenDiscussionv1.Controllers
 
         public IActionResult Index()
         {
-            var discussions = db.Discussions.Include("Category").Include("User");
-            ViewBag.Discussions = discussions;
-
-            if (TempData.ContainsKey("message"))
-            {
-                ViewBag.Message = TempData["message"];
-            }
-
+            ViewBag.Message = TempData["message"];
             return View();
-        }
+        } 
 
         public IActionResult View(int id)
         {

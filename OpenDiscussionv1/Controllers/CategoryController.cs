@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using OpenDiscussionv1.Data;
 using OpenDiscussionv1.Models;
 using System.Data;
+using System.Diagnostics;
 
 namespace OpenDiscussionv1.Controllers
 {
@@ -60,14 +61,46 @@ namespace OpenDiscussionv1.Controllers
                         select discussion
                     ).Count();
 
+            int _perPage = 3;
+            var currentCriteria = 0;
+            if (HttpContext.Request.Query.ContainsKey("criteria"))
+                currentCriteria = Convert.ToInt32(HttpContext.Request.Query["criteria"]);
             var discussions = db.Discussions
                     .Where(d => d.CategoryId == category.CategoryId)
                     .Include("User");
+            if (currentCriteria == 2)
+            {
+                discussions = db.Discussions
+                    .Where(d => d.CategoryId == category.CategoryId)
+                    .Include("User").OrderByDescending(x => x.Replies.Count());
+            }
+            else
+            {
+                discussions = db.Discussions
+                    .Where(d => d.CategoryId == category.CategoryId)
+                    .Include("User").OrderByDescending(x => x.CreatedAt);
+            }
 
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.message = TempData["message"].ToString();
+            }
+            int totalItems = discussions.Count();
+            var currentPage = Convert.ToInt32(HttpContext.Request.Query["page"]);
 
+            var offset = 0;
+
+            if (!currentPage.Equals(0))
+            {
+                offset = (currentPage - 1) * _perPage;
+            }
+            var paginatedDiscussions = discussions.Skip(offset).Take(_perPage);
+            ViewBag.lastPage = Math.Ceiling((float)totalItems / (float)_perPage);
+            ViewBag.Discussions = paginatedDiscussions;
+
+            ViewBag.Criteria = currentCriteria;
             ViewBag.Category = category;
             ViewBag.No_Discussions = No_Discussions;
-            ViewBag.Discussions = discussions;
 
             return View();
         }

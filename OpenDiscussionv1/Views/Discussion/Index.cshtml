@@ -4,27 +4,6 @@
 @{
 }
 
-@if (ViewBag.Message != null)
-{
-    <div class="alert alert-dark" role="alert">
-        @ViewBag.Message
-    </div>
-}
-
-<h3 class="text-center">Discussions</h3>
-
-<div class="container">
-    <div class="d-flex">
-        <a href="/Discussion/New" class="btn btn-success">Start Discussion</a>
-        <a href="/Category/Index" class="btn btn-success mx-1">View Categories</a>
-    </div>
-
-    @foreach(OpenDiscussionv1.Models.Discussion discussion in ViewBag.Discussions) {
-        <div class="border my-1 p-2">
-            @Html.Partial("Discussion", discussion)
-            <div class="card-body">
-                <a href="/Discussion/View/@discussion.DiscussionId" class="btn btn-info">View discussion</a>
-            </div>
-        </div>
-    }
+<div class="alert alert-dark" role="alert">
+     @ViewBag.Message
 </div>
