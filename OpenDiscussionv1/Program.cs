@@ -71,6 +71,10 @@ app.MapControllerRoute(
     name: "Admin",
     pattern: "{controller=Admin}/{action=Index}");
 
+app.MapControllerRoute(
+    name: "Search",
+    pattern: "{controller=Search}/{action=Index}");
+
 app.MapRazorPages();
 
 app.Run();
