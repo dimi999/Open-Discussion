@@ -14,17 +14,20 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
-  background-color: rgb(0, 0, 0, 0.9);
-  color: white;
+    background-color: #323127; /* dark grey background color */
+    font-family: 'Roboto', sans-serif; /* punchy sans-serif font */
+    color: white;
+    margin-bottom: 60px;
 }
 
 .card {
     background-color: rgb(0, 0, 0, 0.9);
+    border-radius: 25px;
 }
 
 .my-1 {
     background-color: rgb(0, 0, 0, 0.9);
+    border-radius: 25px;
 }
 
 
@@ -47,8 +50,45 @@ div.flex-row {
     padding: 1rem 1rem;
     background-color: rgb(0, 0, 0, 0.9);
     color: white;
+    border: 2px solid white;
     border-radius: 25px;
-    border: 2px solid #73AD21;
+    overflow: hidden;
+}
+
+
+.metallic-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #808080; /* more grey color */
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s;
+    text-decoration: none; /* remove underline from link */
+    font-family: 'Roboto', sans-serif; /* more punchy font */
+}
+
+.metallic-button:hover {
+    background-color: gold;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+    transform: translateY(-2px);
+}
+
+.metallic-button:active {
+    background-color: #808080; /* return to more grey color */
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.5);
+    transform: translateY(0);
+}
+
+.metallic-button.disabled {
+    background-color: #808080; /* grey color */
+    box-shadow: none;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
 }
 
 .raspuns {
