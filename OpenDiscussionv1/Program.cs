@@ -24,6 +24,7 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.Configure<SecurityStampValidatorOptions>(o => o.ValidationInterval = TimeSpan.FromSeconds(1));
 
 var app = builder.Build();
+app.UseStatusCodePagesWithRedirects("/Home/Error?statuscode={0}");
 
 using (var scope = app.Services.CreateScope())
 {
