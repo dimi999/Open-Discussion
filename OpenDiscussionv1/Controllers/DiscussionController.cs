@@ -24,12 +24,6 @@ namespace OpenDiscussionv1.Controllers
             _roleManager = roleManager;
         }
 
-        public IActionResult Index()
-        {
-            ViewBag.Message = TempData["message"];
-            return View();
-        } 
-
         public IActionResult View(int id)
         {
             var discussion = db.Discussions
@@ -44,6 +38,17 @@ namespace OpenDiscussionv1.Controllers
             {
                 ViewBag.Message = TempData["message"];
             }
+
+            return View();
+        }
+
+        public IActionResult _View(Discussion discussion)
+        {
+            ViewBag.Discussion = discussion;
+
+            var categ = from category in db.Categories
+                        select category;
+            ViewBag.Categories = categ;
 
             return View();
         }
@@ -73,18 +78,17 @@ namespace OpenDiscussionv1.Controllers
                     db.Discussions.Add(discussion);
                     db.SaveChanges();
                     TempData["message"] = "Discutia a fost creata!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("View", "Category", new { id = discussion.CategoryId });
                 }
                 catch 
                 {
                     TempData["message"] = "Eroare la adaugarea discutiei!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("View", "Category", new {id = discussion.CategoryId});
                 }
             }
             else
             {
-                TempData["message"] = "Nu aveti drepturi pentru aceasta actiune!";
-                return RedirectToAction("Index");
+                return _View(discussion);
             }
         }
 
@@ -108,13 +112,13 @@ namespace OpenDiscussionv1.Controllers
                 catch
                 {
                     TempData["message"] = "Discutia nu a fost gasita!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("View", "Category", new { id = discussion.CategoryId });
                 }
             }
             else
             {
                 TempData["message"] = "Nu aveti drepturi pentru aceasta actiune!";
-                return RedirectToAction("Index");
+                return RedirectToAction("View", new { id = discussion.DiscussionId });
             }
         }
 
@@ -127,13 +131,21 @@ namespace OpenDiscussionv1.Controllers
             {
                 try
                 {
-                    discussion.Title = requestDiscussion.Title;
-                    discussion.Content = requestDiscussion.Content;
-                    discussion.CategoryId = requestDiscussion.CategoryId;
-                    db.SaveChanges();
+                    if (ModelState.IsValid)
+                    {
+                        discussion.Title = requestDiscussion.Title;
+                        discussion.Content = requestDiscussion.Content;
+                        discussion.CategoryId = requestDiscussion.CategoryId;
+                        db.SaveChanges();
 
-                    TempData["message"] = "Discutia a fost editata!";
-                    return RedirectToAction("View", new { id = discussion.DiscussionId });
+                        TempData["message"] = "Discutia a fost editata!";
+                        return RedirectToAction("View", new { id = discussion.DiscussionId });
+                    }
+                    else
+                    {
+                        TempData["message"] = "Intrari invalide!";
+                        return RedirectToAction("View", new { id = discussion.DiscussionId });
+                    }
                 }
                 catch
                 {
@@ -144,7 +156,7 @@ namespace OpenDiscussionv1.Controllers
             else
             {
                 TempData["message"] = "Nu aveti drepturi pentru aceasta actiune!";
-                return RedirectToAction("Index");
+                return RedirectToAction("View", new { id = discussion.DiscussionId });
             } 
         }
 
@@ -161,18 +173,18 @@ namespace OpenDiscussionv1.Controllers
                     db.Discussions.Remove(discussion);
                     db.SaveChanges();
                     TempData["message"] = "Discutia a fost stearsa!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("View", "Category", new { id = discussion.CategoryId });
                 }
                 catch
                 {
                     TempData["message"] = "Eroare la stergerea discutiei!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("View", "Category", new { id = discussion.CategoryId });
                 }
             }
             else
             {
                 TempData["message"] = "Nu aveti drepturi pentru aceasta actiune!";
-                return RedirectToAction("Index");
+                return RedirectToAction("View", "Category", new { id = discussion.CategoryId });
             }
         }
     }

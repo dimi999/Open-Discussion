@@ -111,10 +111,18 @@ namespace OpenDiscussionv1.Controllers
         {
             try
             {
-                db.Categories.Add(categ);
-                db.SaveChanges();
-                TempData["message"] = "Categoria a fost adaugata!";
-                return RedirectToAction("Index");
+                if (ModelState.IsValid)
+                { 
+                    db.Categories.Add(categ);
+                    db.SaveChanges();
+                    TempData["message"] = "Categoria a fost adaugata!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["message"] = "Intrari invalide!";
+                    return RedirectToAction("Index");
+                }
             } catch
             {
                 TempData["message"] = "Eroare la adaugarea categoriei!";
@@ -144,12 +152,20 @@ namespace OpenDiscussionv1.Controllers
         {
             try
             {
-                Category category = db.Categories.Find(id);
-                category.CategoryName = requestCategory.CategoryName;
-                db.SaveChanges();
+                if (ModelState.IsValid)
+                {
+                    Category category = db.Categories.Find(id);
+                    category.CategoryName = requestCategory.CategoryName;
+                    db.SaveChanges();
 
-                TempData["message"] = "Categoria a fost editata!";
-                return RedirectToAction("Index");
+                    TempData["message"] = "Categoria a fost editata!";
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    TempData["message"] = "Intrari invalide!";
+                    return RedirectToAction("Index");
+                }
             }
             catch
             {
