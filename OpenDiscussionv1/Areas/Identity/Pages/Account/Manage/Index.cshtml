@@ -18,13 +18,11 @@
     <div class="col-md-6">
         <form enctype="multipart/form-data" id="profile-form" method="post" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-floating">
-                <input asp-for="Username" class="form-control" disabled />
-                <label asp-for="Username" class="form-label"></label>
+            <div class="form-floating mt-1">
+                <input asp-for="Username" disabled />
             </div>
-            <div class="form-floating">
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <label asp-for="Input.PhoneNumber" class="form-label"></label>
+            <div class="form-floating mt-1">
+                <input asp-for="Input.PhoneNumber" placeholder="Phone number" />
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
             <div>
@@ -32,6 +30,7 @@
                 <br />
                 <input asp-for="Input.Image" type="file"/>
             </div>
+            @*
             <div>
                 <label asp-for="Input.Title" class="form-control">Title</label>
                 <input asp-for="Input.Title" class="form-label" value="@UserManager.GetUserAsync(User).Result.Title"/>
@@ -40,7 +39,8 @@
                 <label asp-for="Input.Description" class="form-control">Description of yourself</label>
                 <input asp-for="Input.Description" class="form-label" value="@UserManager.GetUserAsync(User).Result.Description"/>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            *@
+            <button id="update-profile-button" type="submit" class="w-100 metallic-button mt-1">Save</button>
         </form>
     </div>
 </div>

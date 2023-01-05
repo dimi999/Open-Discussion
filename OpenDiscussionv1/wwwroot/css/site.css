@@ -14,30 +14,29 @@ html {
 }
 
 body {
-    background-color: #323127; /* dark grey background color */
+    background-color: #333333; /* dark grey background color */
     font-family: 'Roboto', sans-serif; /* punchy sans-serif font */
     color: white;
     margin-bottom: 60px;
 }
 
 .card {
-    background-color: rgb(0, 0, 0, 0.9);
+    background-color: #333333;
     border-radius: 25px;
 }
 
 .my-1 {
-    background-color: rgb(0, 0, 0, 0.9);
-    border-radius: 25px;
+    border-radius: 6px;
 }
 
 
 .p2 {
-    background-color: rgb(0, 0, 0, 0.9);
+    background-color: #333333;
 }
 
 
 .border {
-    background-color: rgb(0, 0, 0, 0.9);
+    background-color: #333333;
     border: none !important;
 }
 
@@ -48,10 +47,10 @@ div.flex-row {
 .card-body {
     flex: 1 1 auto;
     padding: 1rem 1rem;
-    background-color: rgb(0, 0, 0, 0.9);
+    background-color: #333333;
     color: white;
     border: 2px solid white;
-    border-radius: 25px;
+    border-radius: 6px;
     overflow: hidden;
 }
 
@@ -96,12 +95,12 @@ div.flex-row {
 }
 
 .raspuns > p {
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     margin-top: 0.5rem;
 }
 
 .titlu-raspuns {
-    font-size: 0.7rem;
+    font-size: 1rem;
 }
 
 .raspuns > div.justify-one > a {
@@ -115,4 +114,37 @@ div.justify-one {
 
 .pagination {
     justify-content: center;
+}
+
+.form-floating input,
+.form-floating textarea,
+.form-floating select {
+    width: 100%; /* full width */
+    border: none; /* remove border */
+    border-radius: 4px; /* rounded corners */
+    background-color: #444444; /* darker grey background color */
+    color: white; /* white text color */
+    padding: 10px; /* add padding */
+    font-family: 'Roboto', sans-serif; /* punchy sans-serif font */
+    font-size: 16px; /* larger font size */
+}
+
+.fw {
+    width: 250px;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: none;
 }

@@ -7,8 +7,6 @@
 <h3 class="text-center">Discussions in @ViewBag.Category.CategoryName</h3>
 
 <div class="container">
-    <h6 class="mb-3">@ViewBag.No_Discussions result(s) in @ViewBag.Category.CategoryName</h6>
-
     @if (ViewBag.Message != null)
     {
         <div class="alert alert-dark" role="alert">
@@ -21,6 +19,8 @@
     }
 
     <div class="container">
+        <h6 class="mb-3">@ViewBag.No_Discussions result(s) in @ViewBag.Category.CategoryName</h6>
+
         <div class="d-flex">
             <a href="/Discussion/New" class="metallic-button">Start Discussion</a>
             <a href="/Category/Index" class="metallic-button mx-2">View Categories</a>
@@ -31,10 +31,7 @@
         @foreach (OpenDiscussionv1.Models.Discussion discussion in ViewBag.Discussions)
         {
                 <div class="border my-1 p-2">
-                @Html.Partial("Discussion", discussion)
-                    <div class="card-body d-flex justify-one border">
-                    <a href="/Discussion/View/@discussion.DiscussionId" class="metallic-button">View discussion</a>
-                </div>
+                @Html.Partial("DiscussionV", discussion)
                 </div>
         }
 
