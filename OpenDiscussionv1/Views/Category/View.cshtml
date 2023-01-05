@@ -7,7 +7,7 @@
 <h3 class="text-center">Discussions in @ViewBag.Category.CategoryName</h3>
 
 <div class="container">
-    <h6 class="mb-3">@ViewBag.No_Discussions results in @ViewBag.Category.CategoryName</h6>
+    <h6 class="mb-3">@ViewBag.No_Discussions result(s) in @ViewBag.Category.CategoryName</h6>
 
     @if (ViewBag.Message != null)
     {
@@ -19,8 +19,6 @@
         var categ = ViewBag.Category.CategoryId;
         var criteria = ViewBag.Criteria;
     }
-
-    <h3 class="text-center">Discussions</h3>
 
     <div class="container">
         <div class="d-flex">
