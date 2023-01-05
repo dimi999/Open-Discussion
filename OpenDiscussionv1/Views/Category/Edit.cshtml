@@ -4,11 +4,11 @@
 @{
 }
 
-<h3>Editare categorie</h3>
-
 <div class="container">
-    <form method="post" action="/Category/Edit/@ViewBag.Category.CategoryId">
+    <h3>Editare categorie</h3>
+
+    <form method="post" action="/Category/Edit/@ViewBag.Category.CategoryId" class="d-flex">
         <input class="form-control mb-1 w-50" type="text" value="@ViewBag.Category.CategoryName" name="CategoryName" />
-        <button class="btn btn-success" type="submit">Save Category</button>
+        <button class="metallic-button mx-2" type="submit">Save Category</button>
     </form>
 </div>
