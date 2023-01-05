@@ -23,6 +23,25 @@ body {
     background-color: rgb(0, 0, 0, 0.9);
 }
 
+.my-1 {
+    background-color: rgb(0, 0, 0, 0.9);
+}
+
+
+.p2 {
+    background-color: rgb(0, 0, 0, 0.9);
+}
+
+
+.border {
+    background-color: rgb(0, 0, 0, 0.9);
+    border: none !important;
+}
+
+div.flex-row {
+    margin-top: 10px;
+}
+
 .card-body {
     flex: 1 1 auto;
     padding: 1rem 1rem;
@@ -30,4 +49,30 @@ body {
     color: white;
     border-radius: 25px;
     border: 2px solid #73AD21;
+}
+
+.raspuns {
+    margin-top: 10px !important;
+}
+
+.raspuns > p {
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+}
+
+.titlu-raspuns {
+    font-size: 0.7rem;
+}
+
+.raspuns > div.justify-one > a {
+    height: 0.7rem;
+    font-size: 0.7rem;
+}
+
+div.justify-one {
+    justify-content: center;
+}
+
+.pagination {
+    justify-content: center;
 }
