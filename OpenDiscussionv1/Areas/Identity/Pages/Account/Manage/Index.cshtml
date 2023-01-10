@@ -30,17 +30,13 @@
                 <br />
                 <input asp-for="Input.Image" type="file"/>
             </div>
-            @*
-            <div>
-                <label asp-for="Input.Title" class="form-control">Title</label>
-                <input asp-for="Input.Title" class="form-label" value="@UserManager.GetUserAsync(User).Result.Title"/>
+            <div class="form-floating mt-1">
+                <input asp-for="Input.Title" value="@UserManager.GetUserAsync(User).Result.Title" placeholder="Title"/>
             </div>
-            <div>
-                <label asp-for="Input.Description" class="form-control">Description of yourself</label>
-                <input asp-for="Input.Description" class="form-label" value="@UserManager.GetUserAsync(User).Result.Description"/>
+            <div class="form-floating mt-1">
+                <input asp-for="Input.Title" value="@UserManager.GetUserAsync(User).Result.Description" placeholder="Description" />
             </div>
-            *@
-            <button id="update-profile-button" type="submit" class="w-100 metallic-button mt-1">Save</button>
+            <button id="update-profile-button" type="submit" class="w-100 metallic-button mt-2">Save</button>
         </form>
     </div>
 </div>

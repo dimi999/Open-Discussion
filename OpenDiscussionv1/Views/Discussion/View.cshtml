@@ -18,7 +18,8 @@
 <div class="border my-1 p-2">
     @Html.Partial("DiscussionED", (OpenDiscussionv1.Models.Discussion)ViewBag.Discussion)
 
-    <div class="list-group">
+    <h3 class="mt-5">Replies</h3>
+    <div class="list-group mt-1">
         @foreach (var reply in ViewBag.Discussion.Replies) {
             <div class="card-body raspuns my-1" aria-current="true">
                 <div class="d-flex w-100 justify-content-between">
